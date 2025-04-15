@@ -17,7 +17,7 @@ subject = "Prakrithi Analysis Final Report"
 def read_root():
     return {"FastAPI is running"}
 
-@app.post("/send-email")
+@app.post("/send_email")
 async def send_email(recipient_name: str, recipient_email: str, file: UploadFile = None):
     receiver_email = recipient_email
 
@@ -30,6 +30,7 @@ async def send_email(recipient_name: str, recipient_email: str, file: UploadFile
 
     Best regards,  
     Team Parakram
+    
     """
 
     message = EmailMessage()
