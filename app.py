@@ -56,6 +56,6 @@ async def send_email(recipient_name: str, recipient_email: str, file: UploadFile
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
             server.login(sender_email, app_password)
             server.send_message(message)
-        return {"message": "Email sent successfully!"}
+        return {"message": 1}
     except Exception as e:
-        return {"message": f"Failed to send email. Error: {str(e)}"}
+        return {"message": 0}
