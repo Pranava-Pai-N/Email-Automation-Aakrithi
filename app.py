@@ -3,12 +3,21 @@ import os
 from fastapi import FastAPI, UploadFile
 from email.message import EmailMessage
 from dotenv import load_dotenv
+from fastapi.middleware.cors import CORSMiddleware
 
 load_dotenv()
 
 app = FastAPI()
 
-sender_email = "teamparakram16@gmail.com"
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+sender_email = os.getenv("SENDER_EMAIL")
 app_password = os.getenv("APP_PASSWORD")
 
 subject = "Prakrithi Analysis Final Report"
