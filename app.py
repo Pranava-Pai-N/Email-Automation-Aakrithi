@@ -1,9 +1,9 @@
 import smtplib
 import os
-from fastapi import FastAPI, UploadFile
+from fastapi import FastAPI, UploadFile, File, Form
+from fastapi.middleware.cors import CORSMiddleware
 from email.message import EmailMessage
 from dotenv import load_dotenv
-from fastapi.middleware.cors import CORSMiddleware
 
 load_dotenv()
 
@@ -27,9 +27,11 @@ def read_root():
     return {"FastAPI is running"}
 
 @app.post("/send_email")
-async def send_email(recipient_name: str, recipient_email: str, file: UploadFile = None):
-    receiver_email = recipient_email
-
+async def send_email(
+    recipient_name: str = Form(...),
+    recipient_email: str = Form(...),
+    file: UploadFile = File(None)
+):
     body = f"""
     Dear {recipient_name},
 
@@ -39,12 +41,11 @@ async def send_email(recipient_name: str, recipient_email: str, file: UploadFile
 
     Best regards,  
     Team Parakram
-    
     """
 
     message = EmailMessage()
     message["From"] = sender_email
-    message["To"] = receiver_email
+    message["To"] = recipient_email
     message["Subject"] = subject
     message.set_content(body)
 
